@@ -2,9 +2,9 @@ import random
 import pandas as pd
 
 print("\n" * 2)
-print("-" * 50)
+print("-" * 65)
 print("Making a random pairing of tas...")
-print("-" * 50)
+print("-" * 65)
 tas = []
 with open("ta.txt", mode='r') as ta_file :
     # Get list of ta names
@@ -20,7 +20,7 @@ for ta in tas :
     curr += 1
 
 if len(tas) % 2 == 1 :
-    print(f"Backreading Lead must also review {tas[-1]}")
+    print(f"Backreading Lead must also review {tas[1]} for Behavior/Concepts")
 
 data = []
 for i in range(len(tas)) :
@@ -39,7 +39,7 @@ for i in range(len(tas)) :
 df = pd.DataFrame(data).sort_values(by="Your 🫵 Name ⬇️")
 df.to_excel("backreading.xlsx", index=False)
 
-print("-" * 50)
+print("-" * 65)
 print("Created a randomized mapping: 'backreading.xlsx'")
-print("-" * 50)
+print("-" * 65)
 print("\n" * 2)
