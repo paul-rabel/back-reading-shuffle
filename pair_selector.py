@@ -17,10 +17,17 @@ with open("ta_workload.csv", mode='r') as work_file :
     reader = csv.DictReader(work_file)
     for line in reader :
         clean_ta = line['name'].strip()
-        ta_work = int(line['workload'])
+        raw_ta_work = int(line['workload'])
+        ta_work = 5 # max
+        if raw_ta_work <= 3 :
+            ta_work = 2
+        elif raw_ta_work <= 6 :
+            ta_work = 3
+        elif raw_ta_work <= 10:
+            ta_work = 4
         if ta_work not in tas :
             tas[ta_work] = []
-        tas[ta_work].append(clean_ta)
+        tas[ta_work].append(clean_ta + f" ({ta_work})")
 
 """
 Shuffle each TA group that has common workload. Add the shuffled TAs to the selection
@@ -60,10 +67,12 @@ backread TA 3 and TA 4, etc.
 """
 data = []
 for i in range(len(ta_circle)) :
-    ta = ta_circle[i]
+    ta = ta_circle[i][:-3]
     category = "Code Quality/Final Slide" if i % 2 == 0 else "Behavior/Concepts"
-    reviewee1 = ta_circle[(i + 1) % len(ta_circle)]
-    reviewee2 = ta_circle[(i + 2) % len(ta_circle)]
+    if "*" in ta:
+        print(f"Lead is doing {category}")
+    reviewee1 = ta_circle[(i + 1) % len(ta_circle)][:-3]
+    reviewee2 = ta_circle[(i + 2) % len(ta_circle)][:-3]
     data.append({
         "Your 🫵 Name ⬇️" : ta,
         "Your Backreading Category" : category,
